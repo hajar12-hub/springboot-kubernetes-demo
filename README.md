@@ -236,9 +236,3 @@ server.port=8081
 - Minikube
 
 ---
-
-## Author
-
-Hazar Me
-
-Spring Boot and Kubernetes project developed using Docker, MySQL, and Minikube.
