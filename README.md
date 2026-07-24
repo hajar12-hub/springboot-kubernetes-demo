@@ -1,10 +1,10 @@
-# 🚀 Spring Boot + MySQL + Kubernetes (Minikube)
+# Spring Boot + MySQL + Kubernetes (Minikube)
 
-## 📖 Description
+## Description
 
-Ce projet présente le déploiement d'une application **Spring Boot** connectée à une base de données **MySQL** sur un cluster **Kubernetes** local en utilisant **Minikube**.
+This project demonstrates the deployment of a **Spring Boot** application connected to a **MySQL** database on a local **Kubernetes** cluster using **Minikube**.
 
-L'objectif est de mettre en pratique les principaux concepts Kubernetes tels que :
+The project covers the following Kubernetes concepts:
 
 - Docker
 - Kubernetes
@@ -14,11 +14,11 @@ L'objectif est de mettre en pratique les principaux concepts Kubernetes tels que
 - Persistent Volumes (PV)
 - Persistent Volume Claims (PVC)
 - Ingress
-- Communication entre Spring Boot et MySQL
+- Communication between Spring Boot and MySQL
 
 ---
 
-# 🛠️ Technologies
+## Technologies
 
 - Java 17
 - Spring Boot
@@ -30,7 +30,7 @@ L'objectif est de mettre en pratique les principaux concepts Kubernetes tels que
 
 ---
 
-# 📂 Structure du projet
+## Project Structure
 
 ```text
 springboot-kubernetes-demo/
@@ -61,9 +61,9 @@ springboot-kubernetes-demo/
 
 ---
 
-# ⚙️ Prérequis
+## Prerequisites
 
-Avant d'exécuter le projet, installer :
+Before running the project, install:
 
 - Java 17
 - Maven
@@ -73,13 +73,13 @@ Avant d'exécuter le projet, installer :
 
 ---
 
-# ▶️ Démarrer Minikube
+## Start Minikube
 
 ```bash
 minikube start --driver=docker --nodes=2
 ```
 
-Vérifier le cluster :
+Verify the cluster:
 
 ```bash
 kubectl get nodes
@@ -87,15 +87,15 @@ kubectl get nodes
 
 ---
 
-# 🐳 Construire l'image Docker
+## Build the Docker Image
 
-Depuis le dossier `springboot-app` :
+From the `springboot-app` directory:
 
 ```bash
 docker build -t springboot-app:latest .
 ```
 
-Charger ensuite l'image dans Minikube :
+Load the image into Minikube:
 
 ```bash
 minikube image load springboot-app:latest
@@ -103,9 +103,9 @@ minikube image load springboot-app:latest
 
 ---
 
-# ☸️ Déploiement Kubernetes
+## Deploy to Kubernetes
 
-## Déployer MySQL
+### Deploy MySQL
 
 ```bash
 kubectl apply -f kubernetes/mysql/persistent-volume.yaml
@@ -114,14 +114,14 @@ kubectl apply -f kubernetes/mysql/mysql-deployment.yaml
 kubectl apply -f kubernetes/mysql/mysql-service.yaml
 ```
 
-## Déployer Spring Boot
+### Deploy the Spring Boot Application
 
 ```bash
 kubectl apply -f kubernetes/springboot/app-deployment.yaml
 kubectl apply -f kubernetes/springboot/app-service.yaml
 ```
 
-## Déployer Ingress
+### Deploy Ingress
 
 ```bash
 kubectl apply -f kubernetes/springboot/ingress.yaml
@@ -129,21 +129,21 @@ kubectl apply -f kubernetes/springboot/ingress.yaml
 
 ---
 
-# 📊 Vérification
+## Verify the Deployment
 
-Afficher les pods :
+List all pods:
 
 ```bash
 kubectl get pods
 ```
 
-Afficher les services :
+List all services:
 
 ```bash
 kubectl get services
 ```
 
-Afficher les deployments :
+List all deployments:
 
 ```bash
 kubectl get deployments
@@ -151,19 +151,21 @@ kubectl get deployments
 
 ---
 
-# 🌐 Activer Ingress
+## Enable Ingress
+
+Enable the Minikube Ingress controller:
 
 ```bash
 minikube addons enable ingress
 ```
 
-Ajouter dans le fichier `/etc/hosts` :
+Add the following entry to your `/etc/hosts` file:
 
 ```
 192.168.49.2 myapp.local
 ```
 
-Puis accéder à :
+Access the application:
 
 ```
 http://myapp.local/tasks
@@ -171,9 +173,9 @@ http://myapp.local/tasks
 
 ---
 
-# 🗄️ Configuration MySQL
+## Database Configuration
 
-Dans `application.properties` :
+`application.properties`
 
 ```properties
 spring.datasource.url=jdbc:mysql://mysql-service:3306/demo
@@ -188,67 +190,55 @@ server.port=8081
 
 ---
 
-# 📁 API
+## API Endpoint
 
-| Méthode | Endpoint | Description |
-|---------|----------|-------------|
-| GET | `/tasks` | Retourne la liste des tâches |
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/tasks` | Returns the list of tasks |
 
 ---
 
-# 🏗️ Architecture
+## Architecture
 
+```text
+           Client
+              │
+              ▼
+           Ingress
+              │
+              ▼
+    Spring Boot Service
+              │
+              ▼
+      Spring Boot Pod
+              │
+              ▼
+        MySQL Service
+              │
+              ▼
+          MySQL Pod
+              │
+              ▼
+            PV / PVC
 ```
-                Client
-                   │
-                   ▼
-              Ingress
-                   │
-                   ▼
-         Spring Boot Service
-                   │
-                   ▼
-          Spring Boot Pod
-                   │
-                   ▼
-           MySQL Service
-                   │
-                   ▼
-             MySQL Pod
-                   │
-                   ▼
-               PV / PVC
-```
 
 ---
 
-# 📸 Résultats
-
-Ajouter ici quelques captures d'écran :
-
-- Application Spring Boot
-- Docker Images
-- `kubectl get pods`
-- `kubectl get services`
-- Minikube Dashboard
-
----
-
-# 📚 Concepts Kubernetes utilisés
+## Kubernetes Concepts Used
 
 - Pods
 - Deployments
 - Services
-- Persistent Volume (PV)
-- Persistent Volume Claim (PVC)
+- Persistent Volumes (PV)
+- Persistent Volume Claims (PVC)
 - Ingress
 - Docker Images
 - Minikube
 
 ---
 
-# 👨‍💻 Auteur
+## Author
 
-**Hazar Me**
+Hazar Me
 
-Projet réalisé dans le cadre d'un TP sur Kubernetes avec Spring Boot, Docker et Minikube.
+Spring Boot and Kubernetes project developed using Docker, MySQL, and Minikube.
